@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-white"> 
+        <a class="navbar-brand text-dark mb-4 text-primary " href="#">🚗 Parking Space Detection</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> 
+          <ul class="navbar-nav">
+            {% if session['username'] %}
+              <li class="nav-item" style="display: inline; border: none; background: none;">
+                <a class="nav-link text-primary" href="{{ url_for('profile') }}"  ><b>Hello,</b>  {{ session['username'] }}</a>
+              </li>
+              <li class="nav-item" style="display: inline; border: none; background: none;">
+                <a class="nav-link text-primary" href="{{ url_for('book_space') }}"  >Book </a>
+              </li>
+              <li class="nav-item" style="display: inline; border: none; background: none;">
+                <a class="nav-link text-primary" href="{{ url_for('exit_lot') }}"  >Exit </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-danger" href="{{ url_for('logout') }}"  >logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link text-success" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-info" href="{{ url_for('register') }}">Register</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <div class="mt-3">
+              <ul class="list-group">
+                  {% for category, message in messages %}
+                      <li class="list-group-item list-group-item-{{ category }}">{{ message }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+      {% endif %}
+  {% endwith %}
+      <div class="container mt-5">
+        <h1 class="mb-4">Booking</h1>
+        <form method="POST" action="{{ url_for('book_space') }}">
+            <div class="form-group">
+                <label for="owner_name">Car Owner Name:</label>
+                <input type="text" class="form-control" id="owner_name" name="owner_name" required>
+            </div>
+            <div class="form-group">
+                <label for="vehicle_name">Vehicle Name:</label>
+                <input type="text" class="form-control" id="vehicle_name" name="vehicle_name" required>
+            </div>
+            <div class="form-group">
+                <label for="vehicle_number">Vehicle Number:</label>
+                <input type="text" class="form-control" id="vehicle_number" name="vehicle_number" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="car_number">Car Number:</label>
+                <input type="text" class="form-control" id="car_number" name="car_number" required>
+            </div>
+            
+           
+            <button type="submit" class="btn btn-primary">Update Booking</button>
+        </form>
+       
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
